@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block title %}Bank{% endblock %}
+{% block content %}
+{% from "_formhelpers.html" import render_field %}
+<div class="container-fluid">
+    <div class="h3">Add Bank</div>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{render_field(form.bankid)}}
+        {{render_field(form.bank)}}
+        {{form.submit(class="btn btn-primary")}}
+    </form>
+    <table class="table">
+        {% if resp %}
+        <thead>
+        <thead>
+            <tr class="text-capitalize">
+                <th>BANK_ID</th>
+                <th>BANK_NUMBER</th>
+                
+            </tr>
+            
+        </thead>
+    <tbody>
+        {%for k in resp["rows"] %}
+        <tr>
+            <td>{{k["BANK_ID"]}}</td>
+            <td>{{k["BANK_NUMBER"]}}</td>
+            
+            <td>
+                <a href="{{url_for('account.delete_bank', ids=k.get('BANK_NUMBER'),num=k.get('BANK_ID'))}}"
+                    class="btn btn-danger btn-sm">x</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+        </thead>
+        
+        {% else %}
+        <p>No results to show</p>
+        {% endif %}
+    </table>
+</div>
+{% endblock %}

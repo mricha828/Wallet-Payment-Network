@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block title %}Personal Details{% endblock %}
+{% block content %}
+{% from "_formhelpers.html" import render_field %}
+<div class="container-fluid">
+    <div class="h3">Modify Personal Details</div>
+    <form method="POST">
+        <form method="POST">
+            <label for="ssn">SSN:</label><br>
+            <input class="form-control" type="text" id="ssn" name="ssn" value="{{account.SSN}}"><br>
+            <label for="name">Name:</label><br>
+            <input class="form-control" type="text" id="name" name="name" value="{{account.NAME}}" ><br>
+            <label for="phone">Phone:</label><br>
+            <input class="form-control" type="text" id="phone" name="phone" value="{{account.PHONE_NUMBER}}" ><br>
+
+            <label for="email">EMAIL:</label><br>
+            <input class="form-control" type="text" id="email" name="email" value="{{current_user.email}}"><br>
+
+            <label for="password">PASSWORD:</label><br>
+            <input class="form-control" type="password" id="password" name="password"><br>
+
+
+            <input type="submit" class="btn btn-primary" value="Save Company" />
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <h1>Monthly Statements</h1>
+    <hr>
+
+    {% if transactions_by_month %}
+      {% for month, transactions in transactions_by_month.items() %}
+        <h3>{{ month }}</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Transaction ID</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Memo</th>
+              <th scope="col">Cancel Reason</th>
+              <th scope="col">Identifier</th>
+              <th scope="col">Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for transaction in transactions %}
+              <tr>
+                <td>{{ transaction.STID }}</td>
+                <td>{{ transaction.AMOUNT }}</td>
+                <td>{{ transaction.MEMO }}</td>
+                <td>{{ transaction.CANCEL_REASON or '-' }}</td>
+                <td>{{ transaction.IDENTIFIER }}</td>
+                <td>{{ transaction.DATE_TIME }}</td>
+              </tr>
+            {% endfor %}
+            <tr>
+              <td>Total Sent:</td>
+              <td>{{ total_sent_by_month[month] }}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+                <td>Total Received:</td>
+                <td>{{ total_received_by_month[month] }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+        </table>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+{% endblock %}

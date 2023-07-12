@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+  <h2>Total Money Sent/Received between 2 Dates</h2>
+  <form method="POST">
+    <div class="form-group">
+      <label for="start_date">Start Date:</label>
+      <input type="date" class="form-control" name="start_date" value="{{ start_date.strftime('%Y-%m-%d') if start_date else '' }}">
+    </div>
+    <div class="form-group">
+      <label for="end_date">End Date:</label>
+      <input type="date" class="form-control" name="end_date" value="{{ end_date.strftime('%Y-%m-%d') if end_date else '' }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Filter</button>
+  </form>
+  <br>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Total Sent: </th>
+        <th>${{ total_sent|float|round(2) }}</th>
+      </tr>
+      <r>
+        <th>Total Received: </th>
+        <th>${{ total_received|float|round(2) }}</th>
+      </r>
+      <tr>
+        <th>Transaction ID</th>
+        <th>Memo</th>
+        <th>Amount</th>
+        <th>Sent To</th>
+        <th>Cancel_Reason</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for transaction in transactions %}
+        <tr>
+          <td>{{ transaction["STID"] }}</td>
+          <td>{{ transaction["MEMO"] }}</td>
+          <td>{{ transaction["AMOUNT"]|float|round(2) }}</td>
+          <td>{{ transaction["IDENTIFIER"] }}</td>
+          <td>{{ transaction["CANCEL_REASON"] }}</td>
+          <td>{{ transaction["DATE_TIME"].strftime("%Y-%m-%d %H:%M:%S") }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        
+          </table>
+    </div>
+        {% endblock %}

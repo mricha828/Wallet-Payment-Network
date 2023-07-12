@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <h1>Search Transactions</h1>
+    <hr>
+
+    <form method="GET">
+      <div class="input-group">
+        <input type="text" name="search_query" class="form-control" placeholder="Search transactions...">
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-outline-secondary">Search</button>
+        </div>
+      </div>
+    </form>
+
+    {% if resp %}
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Transaction ID</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Memo</th>
+            <th scope="col">Cancel Reason</th>
+            <th scope="col">Identifier</th>
+            <th scope="col">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in resp %}
+            <tr>
+              <td>{{ row.STID }}</td>
+              <td>{{ row.AMOUNT }}</td>
+              <td>{{ row.MEMO }}</td>
+              <td>{{ row.CANCEL_REASON or '-' }}</td>
+              <td>{{ row.IDENTIFIER }}</td>
+              <td>{{ row.DATE_TIME }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>No transaction records found.</p>
+    {% endif %}
+
+  </div>
+
+{% endblock %}
+  

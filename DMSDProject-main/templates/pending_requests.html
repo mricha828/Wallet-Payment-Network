@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}Requests{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="h1">Requested Money</div>
+    <form class="row row-cols-lg-auto g-3 align-items-center">
+    </form>
+    <table class="table">
+        {% if resp %}
+        <thead>
+        <thead>
+            <tr class="text-capitalize">
+                <th>Request ID</th>  
+                <th>Amount</th>
+                <th>Memo</th>
+                <th>Date/Time</th>
+                <th>Payment</th>
+            </tr>
+            
+        </thead>
+    <tbody>
+        {%for k in resp["rows"] %}
+        <tr>
+            <td>{{k["RT_ID"]}}</td>
+            <td>{{k["AMOUNT"]}}</td>
+            <td>{{k["MEMO"]}}</td>
+            <td>{{k["DATE_TIME"]}}</td>
+            <td><a href="{{ url_for('main_menu.payment', amount=k['AMOUNT'], rt_id=k['RT_ID'], memo=k['MEMO']) }}" class="btn btn-secondary btn-sm">Pay</a></td>
+
+
+        </tr>
+        {% endfor %}
+    </tbody>
+        </thead>
+        
+        {% else %}
+        <p>No results to show</p>
+        {% endif %}
+    </table>
+</div>
+</div>
+{% endblock %}

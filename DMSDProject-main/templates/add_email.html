@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}Email{% endblock %}
+{% block content %}
+{% from "_formhelpers.html" import render_field %}
+<div class="container-fluid">
+    <div class="h3">Add Email</div>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{render_field(form.email)}}
+        {{form.submit(class="btn btn-primary")}}
+    </form>
+    <table class="table">
+        {% if resp %}
+        <thead>
+        <thead>
+            <tr class="text-capitalize">
+                <th>ALL PRESENT EMAIL IDs</th>
+                
+            </tr>
+            
+        </thead>
+    <tbody>
+        {%for k in resp["rows"] %}
+        <tr>
+            <td>{{k["EMAIL_ADD"]}}</td>
+            {% if k["EMAIL_ADD"] != current_user.email %}
+            <td>
+                <a href="{{url_for('account.delete_email', ids=k.get('EMAIL_ADD'), **request.args)}}"
+                    class="btn btn-danger btn-sm">x</a>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+        </thead>
+        
+        {% else %}
+        <p>No results to show</p>
+        {% endif %}
+    </table>
+</div>
+
+{% endblock %}

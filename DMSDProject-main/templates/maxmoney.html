@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <h1>Max Money Sent/Received Per Month</h1>
+    <!-- <hr>
+    {% for month, transactions in transactions_by_month.items() %}
+      <h2>{{ month }}</h2>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Transaction ID</th>
+            <th>Memo</th>
+            <th>Amount</th>
+            <th>Sent To/Received From</th>
+            <th>Cancel Reason</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transaction in transactions %}
+          {% if transaction["AMOUNT"]==max_sent_transactions or transaction["AMOUNT"]==max_received_by_month %}
+          <tr>
+            <td>{{ transaction["STID"] }}</td>
+            <td>{{ transaction["MEMO"] }}</td>
+            <td>{{ transaction["AMOUNT"]|float|round(2) }}</td>
+            <td>{{ transaction["IDENTIFIER"] if transaction["SSN"] != user_ssn.row["SSN"] else "Sent to {}".format(transaction["IDENTIFIER"]) }}</td>
+            <td>{{ transaction["CANCEL_REASON"] }}</td>
+            <td>{{ transaction["DATE_TIME"].strftime("%Y-%m-%d %H:%M:%S") }}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endfor %} -->
+    <hr>
+    <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Transaction ID</th>
+            <th>Memo</th>
+            <th>Amount</th>
+            <th>Sent To/Received From</th>
+            <th>Cancel Reason</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for transaction in max_sent_transactions %}
+          
+          <tr>
+            <td>{{ transaction["STID"] }}</td>
+            <td>{{ transaction["MEMO"] }}</td>
+            <td>{{ transaction["AMOUNT"]|float|round(2) }}</td>
+            <td>{{ transaction["IDENTIFIER"] }}</td>
+            <td>{{ transaction["CANCEL_REASON"] }}</td>
+            <td>{{ transaction["DATE_TIME"].strftime("%Y-%m-%d %H:%M:%S") }}</td>
+          </tr>
+          {% endfor %}
+          {% for transaction in max_received_transactions %}
+          <tr>
+            <td>{{ transaction["STID"] }}</td>
+            <td>{{ transaction["MEMO"] }}</td>
+            <td>{{ transaction["AMOUNT"]|float|round(2) }}</td>
+            <td>{{ transaction["IDENTIFIER"] }}</td>
+            <td>{{ transaction["CANCEL_REASON"] }}</td>
+            <td>{{ transaction["DATE_TIME"].strftime("%Y-%m-%d %H:%M:%S") }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+  </div>
+{% endblock %}

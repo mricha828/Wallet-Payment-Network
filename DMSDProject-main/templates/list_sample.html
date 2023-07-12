@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block title %}List Samples{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="h1">List Samples</div>
+    <form class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col-12">
+            <label class="form-label" for="name">Name/Key</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="name/key"
+                value="{{request.args.get('name') or ''}}">
+        </div>
+        <div class="col-12">
+            {% set options = ["name", "val", "modified", "created"] %}
+            <label class="form-label" for="col">Column</label>
+            {# notice value doesn't work for server-side built selects
+            that's because the value is set before the options exist so it doesn't pick the proper
+            option, instead we need to manually select the correct option or use a JS hack #}
+            <select class="form-select" id="col" name="col" value="{{request.args.get('col')}}">
+                <option value="">Choose...</option>
+                {% for op in options %}
+                {# using an inline if to output the selected attribute if it matches the op #}
+                <option {{'selected' if request.args.get('col')==op }} value="{{op}}">
+                    {{op|capitalize}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-12">
+            <label class="form-label" for="order">Order</label>
+            <select class="form-select" id="order" name="order" value="{{request.args.get('order')}}">
+                <option value="">Choose...</option>
+                <option {{'selected' if request.args.get('order')=="asc" }} value="asc">+</option>
+                <option {{'selected' if request.args.get('order')=="desc" }} value="desc">-</option>
+            </select>
+        </div>
+        <div class="col-12">
+            <label class="form-label" for="limit">Limit</label>
+            <input class="form-control" type="number" min="1" max="100" id="limit" name="limit"
+                value="{{request.args.get('limit') or '10'}}" />
+        </div>
+        <div class="col-12">
+            <!-- hack to align button with inputs in inline form with labels-->
+            <div>&nbsp;</div>
+            <button type="submit" class="btn btn-primary mt-2">Filter</button>
+            <!--trick to reset a prefilled form to empty-->
+            <a href="?" class="btn btn-secondary mt-2">Reset</a>
+        </div>
+    </form>
+    <table class="table">
+        {% if resp and resp|length > 0 %}
+        <thead>
+            <tr class="text-capitalize">
+                {% for r in resp[0] %}
+                <th>{{r}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        {% for r in resp %}
+        <tr>
+            {% for v in r.values() %}
+            <td>{{v}}</td>
+            {% endfor %}
+            <td><a href="{{url_for('sample.edit', id=r.get('id'))}}" class="btn btn-secondary btn-sm">Edit</a>
+                {# **request.args spreads the key value pairs to be part of the url#}
+                {# the idea is to pass it to the next route #}
+                <a href="{{url_for('sample.delete', id=r.get('id'), **request.args)}}"
+                    class="btn btn-danger btn-sm">x</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <p>No results to show</p>
+        {% endif %}
+    </table>
+</div>
+</div>
+{% endblock %}

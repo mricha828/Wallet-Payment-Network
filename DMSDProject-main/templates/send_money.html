@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block title %}SEND MONEY{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+{% from "_formhelpers.html" import render_field %}
+<div class="container-fluid">
+    <div class="h1">SEND MONEY</div>
+    <div>
+        <form method="POST">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                {{render_field(form.email)}}
+                {{render_field(form.amount)}}
+                {{render_field(form.memo)}}
+                {{form.submit(class="btn btn-primary")}}
+            </form>
+        </form>
+    </div>
+</div>
+{% endblock %}

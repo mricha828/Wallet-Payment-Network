@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block title %}Account Details{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="h1">Account Details</div>
+    <form class="row row-cols-lg-auto g-3 align-items-center">
+    </form>
+    <table class="table">
+        {% if info %}
+        <thead>
+        <thead>
+            <tr class="text-capitalize">
+                <th>SSN</th>
+                <th>NAME</th>  
+                <th>BALANCE</th>
+            </tr>
+            
+        </thead>
+        
+        <tr>
+            <td>{{info["SSN"]}}</td>
+            <td>{{info["NAME"]}}</td>
+            <td>{{info["BALANCE"]}}</td>
+            <br>
+            
+        </tr>
+        </thead>
+        
+        {% else %}
+        <p>No results to show</p>
+        {% endif %}
+    </table>
+    <table class="table">
+        {% if resp %}
+        <thead>
+        <thead>
+            <tr class="text-capitalize">
+                <th>BANK_ID</th>
+                <th>BANK_NUMBER</th>
+            </tr>
+            
+        </thead>
+        
+        <tr>
+            {%for k in resp["rows"] %}
+            <td>{{k["BANK_ID"]}}</td>
+            <td>{{k["BANK_NUMBER"]}}</td>
+            <br>
+            
+        </tr>
+        {% endfor %}
+        </thead>
+        
+        {% else %}
+        <p>No results to show</p>
+        {% endif %}
+    </table>
+</div>
+</div>
+{% endblock %}

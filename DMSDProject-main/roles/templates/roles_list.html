@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block title %}List Roles{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="h1">List Roles</div>
+    <table class="table">
+        {% if rows and rows|length > 0 %}
+        <thead>
+            <tr class="text-capitalize">
+                {% for r in rows[0] %}
+                <th>{{r}}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        {% for r in rows %}
+        <tr>
+            {% for v in r.values() %}
+            <td>{{v}}</td>
+            {% endfor %}
+            <td><a href="{{url_for('roles.edit', id=r.get('id'))}}"
+                    class="btn btn-secondary btn-sm">Edit</a>
+                {# **request.args spreads the key value pairs to be part of the url#}
+                {# the idea is to pass it to the next route #}
+                <a href="{{url_for('roles.delete', id=r.get('id'), **request.args)}}"
+                    class="btn btn-danger btn-sm">x</a>
+            </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <p>No results to show</p>
+        {% endif %}
+    </table>
+</div>
+</div>
+{% endblock %}

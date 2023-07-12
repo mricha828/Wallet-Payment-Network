@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+  <div class="container">
+    <h1>Average Money Sent/Received</h1>
+    <hr>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Month</th>
+            <th>Average Money Sent</th>
+            <th>Average Money Received</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for month, sent in avg_sent_by_month.items() %}
+          <tr>
+            <td>{{ month }}</td>
+            <td>{{ "{:.2f}".format(sent) }}</td>
+            <td>{{ "{:.2f}".format(avg_received_by_month[month]) }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+
+{% endblock %}

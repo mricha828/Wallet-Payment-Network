@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block title %}Personal Details{% endblock %}
+{% block content %}
+{% from "_formhelpers.html" import render_field %}
+<div class="container-fluid">
+    <div class="h3">Modify Personal Details</div>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{render_field(form.phone)}}
+        {{form.submit(class="btn btn-primary")}}
+    </form>
+    <table class="table">
+        {% if resp %}
+        <thead>
+        <thead>
+            <tr class="text-capitalize">
+                <th>ALL PRESENT Phone Numbers</th>
+                
+            </tr>
+            
+        </thead>
+    <tbody>
+        {%for k in resp["rows"] %}
+        <tr>
+            <td>{{k["PHONE_NO"]}}</td>
+            
+            <td>
+                <a href="{{url_for('account.delete_phone', ids=k.get('PHONE_NO'), **request.args)}}"
+                    class="btn btn-danger btn-sm">x</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+        </thead>
+        
+        {% else %}
+        <p>No results to show</p>
+        {% endif %}
+    </table>
+</div>
+{% endblock %}

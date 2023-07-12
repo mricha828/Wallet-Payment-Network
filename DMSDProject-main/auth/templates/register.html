@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+{% from "_formhelpers.html" import render_field %}
+<div class="container-fluid">
+    <div class="h3">Register</div>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {{render_field(form.name)}}
+        {{render_field(form.ssn)}}
+        {{render_field(form.phone)}}
+        {{render_field(form.email)}}
+        {{render_field(form.password)}}
+        {{render_field(form.confirm)}}
+        {{form.submit(class="btn btn-primary")}}
+    </form>
+</div>
+{% endblock %}
